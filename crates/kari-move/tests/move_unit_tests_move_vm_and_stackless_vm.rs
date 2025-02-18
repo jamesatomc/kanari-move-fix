@@ -2,7 +2,7 @@
 // Copyright (c) The Move Contributors
 // SPDX-License-Identifier: Apache-2.0
 
-use move_cli::sandbox::commands::test;
+use kari_move::sandbox::commands::test;
 
 use std::path::{Path, PathBuf};
 

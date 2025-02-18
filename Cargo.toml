@@ -11,7 +11,9 @@ exclude = ["third_party/move"] # Exclude the 'third_party/move' directory from w
 # Members List: Crates that are part of this workspace.
 # These are the core components of the "kanari-sdk" project.
 members = [ 
+    "crates/command", 
     "crates/kari",
+    "crates/kari-move",
     "crates/kari-move-analyzer",
 
     "framework",
@@ -66,14 +68,20 @@ description = "Kanari Network SDK" # Short description of the SDK.
 # Centralized dependency management for consistent versions.
 [workspace.dependencies]
 colored = "3.0.0" 
-anyhow = "1.0.44"
-proptest = "1.0.0"
+anyhow = "1.0.95"
+proptest = "1.6.0"
 proptest-derive = "0.5.1"
+clap = "4.5.30"
+dirs = "6.0.0"
+tokio = { version = "1.43.0", features = ["full"] }
+bcs = "0.1.6"
 
 # Workspace Features: Features that can be enabled or disabled across the workspace.
 kari-move-analyzer = { path = "crates/kari-move-analyzer" }
+kari-move = { path = "crates/kari-move" }
 anoma = { path = "mona/anoma" }
 mona-types = { path = "mona/types" }
+command = { path = "crates/command" }
 
 framework = { path = "framework" }
 
@@ -107,8 +115,8 @@ move-vm-runtime = { path = "third_party/move/language/move-vm/runtime", features
 move-vm-test-utils = { path = "third_party/move/language/move-vm/test-utils", features = ["table-extension"] }
 move-vm-types = { path = "third_party/move/language/move-vm/types" }
 move-bytecode-source-map = { path = "third_party/move/language/move-ir-compiler/move-bytecode-source-map" }
-move-ir-types = { path = "third_party/move/language/move-ir/types" }# END MOVE DEPENDENCIES
-
+move-ir-types = { path = "third_party/move/language/move-ir/types" }
+move-bytecode-viewer = { path = "third_party/move/language/tools/move-bytecode-viewer" }
 
 move-table-extension = { path = "third_party/move/language/extensions/move-table-extension" }
 read-write-set = { path = "third_party/move/language/tools/read-write-set" }

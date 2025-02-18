@@ -15,5 +15,5 @@ fn main() -> Result<()> {
         .chain(nursery_natives(addr, NurseryGasParameters::zeros()))
         .collect();
 
-    move_cli::move_cli(natives, cost_table, &error_descriptions)
+    kari_move::move_cli(natives, cost_table, &error_descriptions)
 }
