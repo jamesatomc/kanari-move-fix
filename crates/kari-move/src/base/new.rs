@@ -12,11 +12,19 @@ use std::{
 
 pub const MOVE_STDLIB_PACKAGE_NAME: &str = "MoveStdlib";
 pub const MOVE_STDLIB_PACKAGE_PATH: &str = "{ \
-    git = \"https://github.com/move-language/move.git\", \
-    subdir = \"language/move-stdlib\", rev = \"main\" \
+    git = \"https://github.com/kanari-network/kanari-sdk.git\", \
+    subdir = \"framework/move-stdlib\", rev = \"kanari-sdk\" \
 }";
 pub const MOVE_STDLIB_ADDR_NAME: &str = "std";
 pub const MOVE_STDLIB_ADDR_VALUE: &str = "0x1";
+
+pub const KANARI_FRAMEWORK_PACKAGE_NAME: &str = "MoveStdlib";
+pub const KANARI_FRAMEWORK_PACKAGE_PATH: &str = "{ \
+    git = \"https://github.com/kanari-network/kanari-sdk.git\", \
+    subdir = \"framework/move-stdlib\", rev = \"kanari-sdk\" \
+}";
+pub const KANARI_FRAMEWORK_ADDR_NAME: &str = "KanariFramework";
+pub const KANARI_FRAMEWORK_ADDR_VALUE: &str = "0x2";
 
 /// Create a new Move package with name `name` at `path`. If `path` is not provided the package
 /// will be created in the directory `name`.
@@ -34,6 +42,8 @@ impl New {
             "0.0.0",
             [(MOVE_STDLIB_PACKAGE_NAME, MOVE_STDLIB_PACKAGE_PATH)],
             [(MOVE_STDLIB_ADDR_NAME, MOVE_STDLIB_ADDR_VALUE)],
+            [(KANARI_FRAMEWORK_PACKAGE_NAME, KANARI_FRAMEWORK_PACKAGE_PATH)],
+            [(KANARI_FRAMEWORK_ADDR_NAME, KANARI_FRAMEWORK_ADDR_VALUE)],
             "",
         )
     }
