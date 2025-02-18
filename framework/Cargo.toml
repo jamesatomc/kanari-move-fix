@@ -1,0 +1,28 @@
+[package]
+name = "framework"
+edition.workspace = true
+categories.workspace = true
+keywords.workspace = true
+homepage.workspace = true
+documentation.workspace = true
+version.workspace = true
+authors.workspace = true
+license.workspace = true
+repository.workspace = true
+description.workspace = true
+
+[dependencies]
+bcs.workspace = true
+serde.workspace = true
+once_cell.workspace = true 
+tracing.workspace = true
+
+move-binary-format.workspace = true
+move-core-types.workspace = true
+
+[build-dependencies]
+anyhow.workspace = true
+bcs.workspace = true
+
+move-binary-format.workspace = true
+move-core-types.workspace = true
