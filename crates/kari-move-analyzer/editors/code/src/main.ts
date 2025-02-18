@@ -24,7 +24,7 @@ async function serverVersion(context: Readonly<Context>): Promise<void> {
         await vscode.window.showInformationMessage(version.stdout);
     } else if (version.error) {
         await vscode.window.showErrorMessage(
-            `Could not execute move-analyzer: ${version.error.message}.`,
+            `Could not execute kari-move-analyzer: ${version.error.message}.`,
         );
     } else {
         await vscode.window.showErrorMessage(
@@ -55,12 +55,12 @@ export async function activate(extensionContext: Readonly<vscode.ExtensionContex
     log.info(`configuration: ${configuration.toString()}`);
 
     const context = Context.create(extensionContext, configuration);
-    // An error here -- for example, if the path to the `move-analyzer` binary that the user
+    // An error here -- for example, if the path to the `kari-move-analyzer` binary that the user
     // specified in their settings is not valid -- prevents the extension from providing any
     // more utility, so return early.
     if (context instanceof Error) {
         void vscode.window.showErrorMessage(
-            `Could not activate move-analyzer: ${context.message}.`,
+            `Could not activate kari-move-analyzer: ${context.message}.`,
         );
         return;
     }
