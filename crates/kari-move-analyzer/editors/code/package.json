@@ -1,13 +1,13 @@
 {
-	"name": "move-analyzer",
-	"displayName": "move-analyzer",
-	"description": "A language server and basic grammar for the Move programming language.",
-	"publisher": "move",
+	"name": "kari-move-analyzer",
+	"displayName": "kari-move-analyzer",
+	"description": "A language server and basic grammar for the Kari Move programming language.",
+	"publisher": "kanari-network",
 	"icon": "images/move.png",
 	"license": "Apache-2.0",
-	"version": "0.0.10",
+	"version": "0.0.1",
 	"preview": true,
-	"homepage": "https://github.com/move-language/move",
+	"homepage": "https://kanari.network/",
 	"repository": {
 		"url": "https://github.com/move-language/move.git",
 		"type": "git"
@@ -32,19 +32,19 @@
 	"contributes": {
 		"commands": [
 			{
-				"command": "move-analyzer.serverVersion",
+				"command": "kari-move-analyzer.serverVersion",
 				"title": "Show Server Version",
-				"category": "Move Analyzer"
+				"category": "Kari Move Analyzer"
 			}
 		],
 		"configuration": {
 			"type": "object",
-			"title": "Move Analyzer",
+			"title": "Kari Move Analyzer",
 			"properties": {
 				"move-analyzer.server.path": {
 					"type": "string",
-					"default": "move-analyzer",
-					"markdownDescription": "Path and filename of the move-analyzer executable, e.g. `/usr/bin/move-analyzer`."
+					"default": "kari-move-analyzer",
+					"markdownDescription": "Path and filename of the kari-move-analyzer executable, e.g. `/usr/bin/kari-move-analyzer`."
 				},
 				"move-analyzer.trace.server": {
 					"type": "string",
@@ -60,7 +60,7 @@
 						"Log each message and its contents."
 					],
 					"default": "off",
-					"description": "Traces the communication between the move-analyzer language server and Visual Studio Code. Note that this log can be very verbose, and so not recommended for anyone besides people working on or debugging move-analyzer itself."
+					"description": "Traces the communication between the kari-move-analyzer language server and Visual Studio Code. Note that this log can be very verbose, and so not recommended for anyone besides people working on or debugging move-analyzer itself."
 				}
 			}
 		},
