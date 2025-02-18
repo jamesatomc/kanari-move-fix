@@ -2477,6 +2477,7 @@ name = "kari"
 version = "0.0.5"
 dependencies = [
  "colored 3.0.0",
+ "kari-move",
  "serde_json",
  "tokio",
 ]
