@@ -1,0 +1,113 @@
+[workspace]
+# Workspace configuration for the "kanari-sdk" project.
+# Defines the overall structure and settings for the workspace.
+resolver = "2" # Use the version 2 feature resolver for more consistent feature resolution.
+
+# Exclude List: Directories to be excluded from the workspace build.
+# This can be useful for excluding third-party code or components 
+# that are not directly part of the workspace's build process.
+exclude = ["third_party/move"] # Exclude the 'third_party/move' directory from workspace builds.
+
+# Members List: Crates that are part of this workspace.
+# These are the core components of the "kanari-sdk" project.
+members = [ 
+    "crates/kari",
+    "crates/kari-move-analyzer",
+
+
+    # Move Crates: Crates specifically related to MoveVM integration.
+    "mona/*",               # Include all crates under the 'mona' directory, likely storage or Move related.
+]
+
+
+# Profile Configurations: Define different build profiles for various scenarios.
+[profile.bench]       # Profile for benchmarking.
+debug = true          # Include debug information for profiling.
+opt-level = 3         # Maximum optimization level for performance.
+lto = "thin"          # Enable Link-Time Optimization (thin LTO for faster linking).
+codegen-units = 1     # Reduce codegen units to improve LTO effectiveness (may increase compile time).
+
+[profile.dev]                 # Profile for development builds.
+debug = true                  # Enable debug information for easier debugging.
+opt-level = 0                 # No optimization for faster compile times.
+split-debuginfo = "unpacked"  # Configure debug info splitting for better debugger experience.
+
+[profile.ci]            # Profile for Continuous Integration builds.
+inherits = "test"       # Inherit settings from the 'test' profile (if defined, otherwise defaults).
+debug = 0               # Disable debug information for potentially faster and smaller builds.
+incremental = false     # Disable incremental compilation for cleaner and more reliable CI builds.
+codegen-units = 16      # Increase codegen units for potentially faster parallel compilation in CI.
+opt-level = 1           # Moderate optimization level for a balance of speed and performance.
+
+[profile.release]       # Profile for release builds.
+opt-level = 3           # Maximum optimization level for performance.
+lto = true              # Enable full Link-Time Optimization for maximum performance and smaller binaries.
+codegen-units = 1       # Reduce codegen units to improve LTO effectiveness.
+strip = true            # Strip debug symbols from the final binary to reduce size.
+debug = false           # Disable debug information for release binaries.
+
+
+# Workspace Package Configuration: Metadata for the entire workspace as a package.
+# This information is used when publishing the SDK as a crate.
+[workspace.package]
+edition = "2021"        # Use Rust 2021 edition.
+categories = ["development-tools"] # Categorize as development tools on crates.io.
+keywords = ["blockchain", "sdk"]     # Keywords for crates.io search.
+homepage = "https://kanari.network"   # Project homepage.
+documentation = "https://docs.kanari.network" # Link to project documentation.
+version = "0.0.5"       # Current version of the SDK.
+authors = ["Kanari Network"] # Authors of the SDK.
+license = "Apache-2.0"    # License information.
+repository = "https://github.com/kanari-network/kanari-sdk" # Link to the code repository.
+description = "Kanari Network SDK" # Short description of the SDK.
+
+
+# Workspace Dependencies: Dependencies that are shared across multiple crates in the workspace.
+# Centralized dependency management for consistent versions.
+[workspace.dependencies]
+colored = "3.0.0" 
+anyhow = "1.0.44"
+proptest = "1.0.0"
+proptest-derive = "0.5.1"
+
+# Workspace Features: Features that can be enabled or disabled across the workspace.
+kari-move-analyzer = { path = "crates/kari-move-analyzer" }
+anoma = { path = "mona/anoma" }
+mona-types = { path = "mona/types" }
+
+# Note: the BEGIN and END comments below are required for external tooling. Do not remove.
+# BEGIN MOVE DEPENDENCIES
+move-abigen = { path = "third_party/move/language/move-prover/move-abigen" }
+move-binary-format = { path = "third_party/move/language/move-binary-format" }
+move-bytecode-verifier = { path = "third_party/move/language/move-bytecode-verifier" }
+move-bytecode-utils = { path = "third_party/move/language/tools/move-bytecode-utils" }
+move-cli = { path = "third_party/move/language/tools/move-cli" }
+move-command-line-common = { path = "third_party/move/language/move-command-line-common" }
+move-compiler = { path = "third_party/move/language/move-compiler" }
+move-core-types = { path = "third_party/move/language/move-core/types" }
+move-coverage = { path = "third_party/move/language/tools/move-coverage" }
+move-disassembler = { path = "third_party/move/language/tools/move-disassembler" }
+move-docgen = { path = "third_party/move/language/move-prover/move-docgen" }
+move-errmapgen = { path = "third_party/move/language/move-prover/move-errmapgen" }
+move-ir-compiler = { path = "third_party/move/language/move-ir-compiler" }
+move-model = { path = "third_party/move/language/move-model" }
+move-package = { path = "third_party/move/language/tools/move-package" }
+move-prover = { path = "third_party/move/language/move-prover" }
+move-prover-boogie-backend = { path = "third_party/move/language/move-prover/boogie-backend" }
+move-stackless-bytecode = { path = "third_party/move/language/move-prover/bytecode" }
+move-prover-test-utils = { path = "third_party/move/language/move-prover/test-utils" }
+move-resource-viewer = { path = "third_party/move/language/tools/move-resource-viewer" }
+move-stdlib = { path = "third_party/move/language/move-stdlib", features = ["testing"] }
+move-symbol-pool = { path = "third_party/move/language/move-symbol-pool" }
+move-transactional-test-runner = { path = "third_party/move/language/testing-infra/transactional-test-runner" }
+move-unit-test = { path = "third_party/move/language/tools/move-unit-test", features = ["table-extension"] }
+move-vm-runtime = { path = "third_party/move/language/move-vm/runtime", features = ["stacktrace", "debugging", "testing"] }
+move-vm-test-utils = { path = "third_party/move/language/move-vm/test-utils", features = ["table-extension"] }
+move-vm-types = { path = "third_party/move/language/move-vm/types" }
+move-bytecode-source-map = { path = "third_party/move/language/move-ir-compiler/move-bytecode-source-map" }
+move-ir-types = { path = "third_party/move/language/move-ir/types" }# END MOVE DEPENDENCIES
+
+
+move-table-extension = { path = "third_party/move/language/extensions/move-table-extension" }
+read-write-set = { path = "third_party/move/language/tools/read-write-set" }
+read-write-set-dynamic = { path = "third_party/move/language/tools/read-write-set/dynamic" }
