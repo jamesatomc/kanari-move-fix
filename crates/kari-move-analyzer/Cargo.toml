@@ -14,15 +14,15 @@ codespan-reporting = "0.11.1"
 derivative = "2.2.0"
 dunce = "1.0.5"
 im = "15.1.0"
-lsp-server = "0.5.1"
+lsp-server = "0.7.8"
 lsp-types = "0.90.1"
-petgraph = "0.7.1"
-serde = { version = "1.0.217", features = ["derive"] }
-serde_json = "1.0.138"
-tempfile = "3.17.1"
-url = "2.5.4"
+petgraph.workspace = true
+serde = { workspace = true, features = ["derive"] }
+serde_json.workspace = true
+tempfile.workspace = true
+url.workspace = true
 clap = { version = "3.1.8", features = ["derive"] }
-crossbeam = "0.8.4"
+crossbeam.workspace = true
 move-command-line-common.workspace = true
 move-compiler.workspace = true
 move-ir-types.workspace = true

@@ -2505,6 +2505,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "itertools"
+version = "0.14.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "2b192c782037fadd9cfa75548310488aabdbf3d2da73885b31bd0abd03351285"
+dependencies = [
+ "either",
+]
+
+[[package]]
 name = "itoa"
 version = "1.0.14"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2550,7 +2559,7 @@ dependencies = [
  "datatest-stable",
  "difference",
  "httpmock",
- "itertools 0.10.5",
+ "itertools 0.14.0",
  "move-binary-format",
  "move-bytecode-source-map",
  "move-bytecode-utils",
@@ -2807,13 +2816,14 @@ dependencies = [
 
 [[package]]
 name = "lsp-server"
-version = "0.5.2"
+version = "0.7.8"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "c351c75989da23b355226dc188dc2b52538a7f4f218d70fd7393c6b62b110444"
+checksum = "9462c4dc73e17f971ec1f171d44bfffb72e65a130117233388a0ebc7ec5656f9"
 dependencies = [
  "crossbeam-channel",
  "log",
  "serde 1.0.217",
+ "serde_derive",
  "serde_json",
 ]
 
