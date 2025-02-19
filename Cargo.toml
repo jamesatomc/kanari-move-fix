@@ -77,6 +77,7 @@ tokio = { version = "1.43.0", features = ["full"] }
 bcs = "0.1.6"
 
 # Workspace Features: Features that can be enabled or disabled across the workspace.
+
 kari-move-analyzer = { path = "crates/kari-move-analyzer" }
 kari-move = { path = "crates/kari-move" }
 anoma = { path = "mona/anoma" }
