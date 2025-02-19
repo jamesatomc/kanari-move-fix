@@ -11,7 +11,7 @@ use move_core_types::{
 };
 use std::path::Path;
 
-use clap::{ArgEnum, Parser};
+use clap::*;
 
 #[derive(Parser)]
 pub enum ExperimentalCommand {
@@ -20,51 +20,52 @@ pub enum ExperimentalCommand {
     #[clap(name = "read-write-set")]
     ReadWriteSet {
         /// Path to .mv file containing module bytecode.
-        #[clap(name = "module", parse(from_os_str))]
+        #[clap(name = "module", value_parser = value_parser!(PathBuf))]
         module_file: PathBuf,
         /// A function inside `module_file`.
         #[clap(name = "function")]
         fun_name: String,
+        // For signers
         #[clap(
             long = "signers",
-            takes_value(true),
-            multiple_values(true),
-            multiple_occurrences(true)
+            num_args = 1..,
+            action = clap::ArgAction::Append
         )]
         signers: Vec<String>,
+        
+        // For args
         #[clap(
             long = "args",
-            parse(try_from_str = parser::parse_transaction_argument),
-            takes_value(true),
-            multiple_values(true),
-            multiple_occurrences(true)
+            value_parser = clap::builder::ValueParser::new(parser::parse_transaction_argument),
+            num_args = 1..,
+            action = clap::ArgAction::Append
         )]
         args: Vec<TransactionArgument>,
+        
+        // For type_args
         #[clap(
             long = "type-args",
-            parse(try_from_str = parser::parse_type_tag),
-            takes_value(true),
-            multiple_values(true),
-            multiple_occurrences(true)
+            value_parser = clap::builder::ValueParser::new(parser::parse_type_tag),
+            num_args = 1..,
+            action = clap::ArgAction::Append
         )]
         type_args: Vec<TypeTag>,
-        #[clap(long = "concretize", possible_values = ConcretizeMode::variants(), ignore_case = true, default_value = "dont")]
+        #[clap(long = "concretize", value_enum, default_value_t = ConcretizeMode::Dont)]
         concretize: ConcretizeMode,
     },
 }
 
 // Specify if/how the analysis should concretize and filter the static analysis summary
-
-// Specify if/how the analysis should concretize and filter the static analysis summary
-#[derive(Debug, Clone, Copy, ArgEnum)]
+#[derive(Debug, Clone, Copy, ValueEnum)]
+#[clap(rename_all = "lowercase")]
 pub enum ConcretizeMode {
-    // Show the full concretized access paths read or written (e.g. 0xA/0x1::M::S/f/g)
+    /// Show the full concretized access paths read or written (e.g. 0xA/0x1::M::S/f/g)
     Paths,
-    // Show only the concrete resource keys that are read (e.g. 0xA/0x1::M::S)
+    /// Show only the concrete resource keys that are read (e.g. 0xA/0x1::M::S)
     Reads,
-    // Show only the concrete resource keys that are written (e.g. 0xA/0x1::M::S)
+    /// Show only the concrete resource keys that are written (e.g. 0xA/0x1::M::S)
     Writes,
-    // Do not concretize; show the results from the static analysis
+    /// Do not concretize; show the results from the static analysis
     Dont,
 }
 
@@ -82,11 +83,11 @@ impl FromStr for ConcretizeMode {
     }
 }
 
-impl ConcretizeMode {
-    fn variants() -> [&'static str; 4] {
-        ["paths", "reads", "writes", "dont"]
-    }
-}
+// impl ConcretizeMode {
+//     fn variants() -> [&'static str; 4] {
+//         ["paths", "reads", "writes", "dont"]
+//     }
+// }
 
 impl ExperimentalCommand {
     pub fn handle_command(&self, move_args: &Move, storage_dir: &Path) -> Result<()> {

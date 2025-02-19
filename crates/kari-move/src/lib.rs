@@ -22,7 +22,7 @@ pub const DEFAULT_BUILD_DIR: &str = ".";
 const BCS_EXTENSION: &str = "bcs";
 
 use anyhow::Result;
-use clap::Parser;
+use clap::{Parser, value_parser};
 use move_core_types::{
     account_address::AccountAddress, errmap::ErrorMapping, identifier::Identifier,
 };
@@ -36,7 +36,7 @@ type NativeFunctionRecord = (AccountAddress, Identifier, Identifier, NativeFunct
 #[clap(author, version, about)]
 pub struct Move {
     /// Path to a package which the command should be run with respect to.
-    #[clap(long = "path", short = 'p', global = true, parse(from_os_str))]
+    #[clap(long = "path", short = 'p', global = true, value_parser = value_parser!(PathBuf))]
     pub package_path: Option<PathBuf>,
 
     /// Print additional diagnostics if available.
@@ -44,7 +44,7 @@ pub struct Move {
     pub verbose: bool,
 
     /// Package build options
-    #[clap(flatten)]
+    #[clap(skip)]
     pub build_config: BuildConfig,
 }
 
@@ -76,7 +76,7 @@ pub enum Command {
     Sandbox {
         /// Directory storing Move resources, events, and module bytecodes produced by module publishing
         /// and script execution.
-        #[clap(long, default_value = DEFAULT_STORAGE_DIR, parse(from_os_str))]
+        #[clap(long, default_value = DEFAULT_STORAGE_DIR, value_parser = value_parser!(PathBuf))]
         storage_dir: PathBuf,
         #[clap(subcommand)]
         cmd: sandbox::cli::SandboxCommand,
@@ -86,7 +86,7 @@ pub enum Command {
     Experimental {
         /// Directory storing Move resources, events, and module bytecodes produced by module publishing
         /// and script execution.
-        #[clap(long, default_value = DEFAULT_STORAGE_DIR, parse(from_os_str))]
+        #[clap(long, default_value = DEFAULT_STORAGE_DIR, value_parser = value_parser!(PathBuf))]
         storage_dir: PathBuf,
         #[clap(subcommand)]
         cmd: experimental::cli::ExperimentalCommand,

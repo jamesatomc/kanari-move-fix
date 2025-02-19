@@ -10,7 +10,7 @@ use crate::{
     Move, NativeFunctionRecord, DEFAULT_BUILD_DIR,
 };
 use anyhow::Result;
-use clap::Parser;
+use clap::{value_parser, Parser};
 use move_core_types::{
     errmap::ErrorMapping, language_storage::TypeTag, parser,
     transaction_argument::TransactionArgument,
@@ -47,9 +47,8 @@ pub enum SandboxCommand {
         /// Manually specify the publishing order of modules.
         #[clap(
             long = "override-ordering",
-            takes_value(true),
-            multiple_values(true),
-            multiple_occurrences(true)
+            num_args = 1..,
+            action = clap::ArgAction::Append
         )]
         override_ordering: Option<Vec<String>>,
     },
@@ -59,7 +58,7 @@ pub enum SandboxCommand {
     Run {
         /// Path to .mv file containing either script or module bytecodes. If the file is a module, the
         /// `script_name` parameter must be set.
-        #[clap(name = "script", parse(from_os_str))]
+        #[clap(name = "script", value_parser = value_parser!(PathBuf))]
         script_file: PathBuf,
         /// Name of the script function inside `script_file` to call. Should only be set if `script_file`
         /// points to a module.
@@ -69,9 +68,8 @@ pub enum SandboxCommand {
         /// `main(&account: signer)`). Must match the number of signers expected by `script_file`.
         #[clap(
             long = "signers",
-            takes_value(true),
-            multiple_values(true),
-            multiple_occurrences(true)
+            num_args = 1..,
+            action = clap::ArgAction::Append
         )]
         signers: Vec<String>,
         /// Possibly-empty list of arguments passed to the transaction (e.g., `i` in
@@ -84,20 +82,18 @@ pub enum SandboxCommand {
         /// ASCII strings (e.g., 'b"hi" will parse as the vector<u8> value [68, 69]).
         #[clap(
             long = "args",
-            parse(try_from_str = parser::parse_transaction_argument),
-            takes_value(true),
-            multiple_values(true),
-            multiple_occurrences(true)
+            value_parser = clap::builder::ValueParser::new(parser::parse_transaction_argument),
+            num_args = 1..,
+            action = clap::ArgAction::Append
         )]
         args: Vec<TransactionArgument>,
         /// Possibly-empty list of type arguments passed to the transaction (e.g., `T` in
         /// `main<T>()`). Must match the type arguments kinds expected by `script_file`.
         #[clap(
             long = "type-args",
-            parse(try_from_str = parser::parse_type_tag),
-            takes_value(true),
-            multiple_values(true),
-            multiple_occurrences(true)
+            value_parser = clap::builder::ValueParser::new(parser::parse_type_tag),
+            num_args = 1..,
+            action = clap::ArgAction::Append
         )]
         type_args: Vec<TypeTag>,
         /// Maximum number of gas units to be consumed by execution.
@@ -126,7 +122,7 @@ pub enum SandboxCommand {
     #[clap(name = "view")]
     View {
         /// Path to a resource, events file, or module stored on disk.
-        #[clap(name = "file", parse(from_os_str))]
+        #[clap(name = "file", value_parser = value_parser!(PathBuf))]
         file: PathBuf,
     },
     /// Delete all resources, events, and modules stored on disk under `storage-dir`.
@@ -150,7 +146,7 @@ pub enum GenerateCommand {
     #[clap(name = "struct-layouts")]
     StructLayouts {
         /// Path to a module stored on disk.
-        #[clap(long, parse(from_os_str))]
+        #[clap(long, value_parser = value_parser!(PathBuf))]
         module: PathBuf,
         /// If set, generate bindings for the specified struct and type arguments. If unset,
         /// generate bindings for all closed struct definitions.
@@ -166,11 +162,10 @@ pub struct StructLayoutOptions {
     /// Generate layout bindings for `struct` bound to these type arguments.
     #[clap(
         long = "type-args",
-        parse(try_from_str = parser::parse_type_tag),
-        requires="struct",
-        takes_value(true),
-        multiple_values(true),
-        multiple_occurrences(true)
+        value_parser = clap::builder::ValueParser::new(parser::parse_type_tag),
+        requires = "struct",
+        num_args = 1..,
+        action = clap::ArgAction::Append
     )]
     type_args: Option<Vec<TypeTag>>,
     /// If set, replace all Move source syntax separators ("::" for address/struct/module name

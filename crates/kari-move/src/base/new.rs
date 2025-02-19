@@ -40,8 +40,14 @@ impl New {
         self.execute(
             path,
             "0.0.0",
-            [(MOVE_STDLIB_PACKAGE_NAME, MOVE_STDLIB_PACKAGE_PATH)],
-            [(MOVE_STDLIB_ADDR_NAME, MOVE_STDLIB_ADDR_VALUE)],
+            [
+                (MOVE_STDLIB_PACKAGE_NAME, MOVE_STDLIB_PACKAGE_PATH),
+                (KANARI_FRAMEWORK_PACKAGE_NAME, KANARI_FRAMEWORK_PACKAGE_PATH),
+            ],
+            [
+                (MOVE_STDLIB_ADDR_NAME, MOVE_STDLIB_ADDR_VALUE),
+                (KANARI_FRAMEWORK_ADDR_NAME, KANARI_FRAMEWORK_ADDR_VALUE),
+            ],
             "",
         )
     }
