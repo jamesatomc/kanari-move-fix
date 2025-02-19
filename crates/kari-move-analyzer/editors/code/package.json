@@ -80,7 +80,7 @@
 		"menus": {
 			"commandPalette": [
 				{
-					"command": "move-analyzer.serverVersion"
+					"command": "kari-move-analyzer.serverVersion"
 				}
 			]
 		}

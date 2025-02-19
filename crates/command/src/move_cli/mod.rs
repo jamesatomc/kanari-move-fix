@@ -8,6 +8,7 @@ use kari_move::{
         errmap::Errmap,
         info::Info,
         new::New,
+        prove::Prove,
         test::Test,
     },
     run_cli, Command, Move,
@@ -25,17 +26,13 @@ struct CommandInfo {
 const COMMANDS: &[CommandInfo] = &[
     CommandInfo { name: "build", description: "Build the package" },
     CommandInfo { name: "coverage", description: "Inspect test coverage for this package. A previous test run with the `--coverage` flag must have" },
-    // CommandInfo { name: "", description: "previously been run" },
     CommandInfo { name: "disassemble", description: "Disassemble Move bytecode" },
     CommandInfo { name: "docgen", description: "Generate documentation" },
     CommandInfo { name: "errmap", description: "Generate error map" },
     CommandInfo { name: "info", description: "Print address information" },
     CommandInfo { name: "new", description: "Create a new Move package with name `name` at `path`. If `path` is not provided the package will" },
-    // CommandInfo { name: "", description: "be created in the directory `name`" },
+    CommandInfo { name: "prove", description: "Prove a Move module" },
     CommandInfo { name: "test", description: "Run Move unit tests" },
-    // CommandInfo { name: "publish", description: "Publish Move module" },
-    // CommandInfo { name: "call", description: "Call a function in a Move module" },
-    // CommandInfo { name: "sandbox", description: "Execute sandbox commands" },
 ];
 
 fn display_help(show_error: bool) {
@@ -133,6 +130,11 @@ pub fn handle_move_command() {
             check_stackless_vm: false,
             verbose_mode: false,
             compute_coverage: false,
+        }),
+        Some("prove") => Command::Prove(Prove {
+            target_filter: None,
+            for_test: false,
+            options: None,
         }),
         _ => {
             display_help(true);
