@@ -1,6 +1,7 @@
 [package]
 name = "KanariSystem"
-edition = "legacy" # edition = "legacy" to use legacy (pre-2024) Move
+version = "0.1.0"
+edition = "legacy"
 
 
 [dependencies]
