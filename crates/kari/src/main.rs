@@ -4,7 +4,7 @@ use colored::Colorize;
 // use command::keytool_cli::handle_keytool_command;
 use command::move_cli::handle_move_command;
 
-// use command::public_cli::handle_public_command;
+use command::public_cli::handle_public_command;
 
 
 
@@ -24,11 +24,11 @@ const COMMANDS: &[CommandInfo] = &[
     //     alias: None, 
     //     description: "Start a local Kari blockchain node" 
     // },
-    // CommandInfo { 
-    //     name: "public", 
-    //     alias: None, 
-    //     description: "Manage Web3 public files and IPFS storage" 
-    // },
+    CommandInfo { 
+        name: "public", 
+        alias: None, 
+        description: "Manage Web3 public files and IPFS storage" 
+    },
     CommandInfo { 
         name: "move", 
         alias: None, 
@@ -106,9 +106,9 @@ async fn main() {
 
     match args.get(1).map(|s| s.as_str()) {
         // Some("start") => start_node().await,
-        // Some("public") => {
-        //     let _ = handle_public_command();
-        // },
+        Some("public") => {
+            let _ = handle_public_command();
+        },
         Some("move") => handle_move_command(),
         // Some("keytool") => {
         //     let _ = handle_keytool_command();

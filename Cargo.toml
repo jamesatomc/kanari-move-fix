@@ -94,7 +94,7 @@ futures = "0.3.30"
 jsonrpc-core = "18.0"
 jsonrpc-http-server = "18.0"
 tokio = { version = "1", features = ["full"] }
-
+im = "15.1.0"
 # Core Utilities
 bip39 = { version = "2.0.0", features = ["rand"] }
 chrono = "0.4.38"
@@ -121,10 +121,10 @@ url = "2.5.4"
 clap = { version = "4.5.30" }
 codespan-reporting = "0.11.0"
 colored = "3.0.0"
-
+derivative = "2.2.0"
 # Storage & Database
 rocksdb = "0.23.0"
-
+dunce = "1.0.5"
 # Testing
 datatest-stable = "0.3.2"
 
@@ -134,6 +134,7 @@ kari-move-analyzer = { path = "crates/kari-move-analyzer" }
 kari-move = { path = "crates/kari-move" }
 anoma = { path = "mona/anoma" }
 mona-types = { path = "mona/types" }
+mona-storage = { path = "mona/mona-storage" }
 command = { path = "crates/command" }
 framework = { path = "framework" }
 

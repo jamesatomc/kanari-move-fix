@@ -883,6 +883,7 @@ dependencies = [
  "colored 3.0.0",
  "dirs",
  "kari-move",
+ "mona-storage",
  "move-core-types",
  "move-package",
  "move-vm-test-utils",
@@ -2600,7 +2601,7 @@ name = "kari-move-analyzer"
 version = "1.0.0"
 dependencies = [
  "anyhow",
- "clap 3.2.25",
+ "clap 4.5.30",
  "codespan-reporting",
  "crossbeam",
  "derivative",
